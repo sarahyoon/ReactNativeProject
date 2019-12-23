@@ -6,6 +6,9 @@ import {createStackNavigator} from 'react-navigation-stack';
 import MyAlbum from './screens/Album/MyAlbum';
 import MyBox from './screens/Box/MyBox';
 
+import AlbumAllList from './screens/Album/AlbumAllList';
+import AlbumDetail from './screens/Album/AlbumDetail';
+
 const AlbumTab = createStackNavigator(
   {
     MyAlbum: {
@@ -13,7 +16,10 @@ const AlbumTab = createStackNavigator(
               navigationOptions:{
                 header:null,
               }
-            }
+            },
+    AlbumAllList : AlbumAllList,
+    AlbumDetail: AlbumDetail,
+
   }
 );
 

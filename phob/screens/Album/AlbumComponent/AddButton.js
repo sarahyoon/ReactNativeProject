@@ -21,7 +21,7 @@ const AddButton = () => {
 
         if(!list) {
             list = [];
-            number = 0;
+            number = 1;
         }
 
         else{
@@ -31,7 +31,7 @@ const AddButton = () => {
 
         const album ={
             id: 'albumID-' + number,
-            imageSource: '../../../Assets/Images/newAlbum.png',
+            albumImage: require('../../../Assets/Images/defaultImage.png'),
             name
         };
 
@@ -43,7 +43,7 @@ const AddButton = () => {
 
     return(
         <View style={{flex:1}}>
-            <TouchableOpacity onPress = {toggleModal}>
+            <TouchableOpacity onPress = {toggleModal} style={styles.addButton}>
                 <Image 
                 source = {
                     require('../../../Assets/Icons/add.png')
@@ -52,11 +52,11 @@ const AddButton = () => {
                 />
             </TouchableOpacity>
             <Modal isVisible={isModalVisible}>
-                <View style={{backgroundColor:'#FFFF', flex:1 }}>
+                <View style={styles.modal}>
                 
                 <View style={styles.textInputStyle}>
                 <Text>Create Album Name!</Text>
-                <TextInput style={{ height:40, width: 100, borderColor:'gray', borderWidth:1}}
+                <TextInput style={{ height:30, width: 150, borderColor:'gray', borderWidth:1}}
                 onChangeText={text => setName(text)}
                 value={name} />
                 </View>
@@ -73,6 +73,20 @@ const AddButton = () => {
 };
 
 const styles = StyleSheet.create({
+    addButton:{
+        flex:1,
+        justifyContent:'center'
+    },
+
+    modal:{
+        backgroundColor: 'white',
+        padding: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+
     textInputStyle:{
         alignItems:'center'
     },

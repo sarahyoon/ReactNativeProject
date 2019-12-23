@@ -1,19 +1,20 @@
 import React from 'react';
-import {FlatList, View, Text, ScrollView, TouchableOpacity, Image, Button} from 'react-native';
+import {FlatList, View, Text, ScrollView, TouchableOpacity, Image, Button, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 // import {NavigationEvents} from 'react-navigation';
 
 let ListItem = props => (
     <TouchableOpacity onPress={props.onPress}>
-        <View style={{marginTop:300}}>
-            <Image source = {props.item.imageSource} style={{width:100, height:100}}/>
+        <View style={{flexDirection:'row'}}>
+        <View style={{paddingTop:10, paddingRight:8}}>
+            <Image source = {props.item.albumImage} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
+        </View>
         </View>
     </TouchableOpacity>
 )
 
-
-const AlbumViewList =() => {
+const AlbumViewList =props => {
 
     const [albumList, setAlbumList] = React.useState([]);
 
@@ -24,8 +25,10 @@ const AlbumViewList =() => {
     }
 
     const deleteAll = () => {
-        albumList.splice(0, albumList.length);
-        setAlbumList(albumList);
+        let list = [...albumList];
+        list.splice(0, list.length);
+        setAlbumList(list);
+        AsyncStorage.setItem('album', JSON.stringify(list));
     }
 
     React.useEffect(() => {
@@ -36,19 +39,49 @@ const AlbumViewList =() => {
     return(
     <>
 
-         {/* <NavigationEvents onDidFocus={ loadData }/> */}
-        <Button title = "delete" onPress={deleteAll}/>
-        <FlatList data = {albumList}
-        renderItem = {itemProps => 
-        <ListItem {...itemProps}        
-        />
-        }
-        keyExtractor = {
-            item => item.id
-        }/>
+         <View style={styles.sectionContainer}>
+            <View style={styles.titles}> 
+                <Text style={styles.sectionTitle}>나의 앨범</Text>
+                <TouchableOpacity onPress={() => props.navigation.navigate('AlbumAllList') }>
+                    <Text style={styles.all}>전체보기</Text>
+                    <Button title='delete' onPress={deleteAll}></Button>
+                 </TouchableOpacity>
+            </View>
+            <FlatList data = {albumList}
+             renderItem = {itemProps => 
+            <ListItem {...itemProps}        
+             />
+            }
+            keyExtractor = {
+                item => item.id
+            }/>
+         </View>
+
     </>
     );
     
 };
+
+
+const styles=StyleSheet.create({
+    all:{
+      flexDirection:'row',
+      alignItems:'flex-end',
+      color:'blue'
+    },
+    sectionContainer:{
+      marginTop: 30,
+      paddingHorizontal: 24,
+    },
+    titles:{
+      justifyContent:'space-between',
+      flexDirection:'row'
+    },
+    sectionTitle: {
+      fontSize: 24,
+      fontWeight: '600',
+      color: 'black',
+    }
+  });
 
 export default AlbumViewList;
