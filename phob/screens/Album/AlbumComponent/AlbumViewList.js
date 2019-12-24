@@ -1,27 +1,28 @@
 import React from 'react';
 import {FlatList, View, Text, ScrollView, TouchableOpacity, Image, Button, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-// import {NavigationEvents} from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
+
 
 let ListItem = props => (
     <TouchableOpacity onPress={props.onPress}>
-        <View style={{flexDirection:'row'}}>
+        <View>
         <View style={{paddingTop:10, paddingRight:8}}>
-            <Image source = {props.item.albumImage} style={{width:332, height:217,borderRadius: 10}}/>
+            <Image source = {{uri:props.item.imageSource}} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
         </View>
         </View>
     </TouchableOpacity>
 )
 
-const AlbumViewList =props => {
-
+const AlbumViewList = props => {
+    
     const [albumList, setAlbumList] = React.useState([]);
-
     const loadData = async() => {
         let list = await AsyncStorage.getItem('album');
         list = list ? JSON.parse(list) : [];
         setAlbumList(list);
+        console.log(list);
     }
 
     const deleteAll = () => {
@@ -32,13 +33,12 @@ const AlbumViewList =props => {
     }
 
     React.useEffect(() => {
-        loadData();
-
-    }, [albumList]);
+      loadData();
+    }, []);
 
     return(
     <>
-
+        {/* <NavigationEvents onDidFocus={loadData}/> */}
          <View style={styles.sectionContainer}>
             <View style={styles.titles}> 
                 <Text style={styles.sectionTitle}>나의 앨범</Text>
@@ -49,12 +49,12 @@ const AlbumViewList =props => {
             </View>
             <FlatList data = {albumList}
              renderItem = {itemProps => 
-            <ListItem {...itemProps}        
-             />
-            }
-            keyExtractor = {
-                item => item.id
-            }/>
+            <ListItem {...itemProps}
+                   onPress = {
+                     () => props.navigation.navigate('AlbumDetail', {id: itemProps.item.id, name:itemProps.item.name})
+                   }
+             />}
+            keyExtractor = {item => item.id}/>
          </View>
 
     </>

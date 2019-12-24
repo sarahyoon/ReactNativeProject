@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
             </View>
         );
     }
-    
+ 
     
     const AlbumAllList = props=>{
          const {navigate} = props.navigation;
@@ -51,7 +51,12 @@ import AsyncStorage from '@react-native-community/async-storage';
             style={styles.list}
         />
         );
-    }
+    };
+
+    AlbumAllList.navigationOptions = {
+      title:'전체보기',
+      
+    };
     
     const styles=StyleSheet.create({
         all:{

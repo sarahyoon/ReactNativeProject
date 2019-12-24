@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const AddButton = () => {
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [name, setName] = React.useState('');
+   // const [imageSource, setImageSource] = React.useState('');
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -15,7 +16,9 @@ const AddButton = () => {
 
     //save
     const pressOk = async() => {
-
+        
+        //setImageSource('../../../Assets/Images/defaultImage.png');
+        const defaultImage = '../../../Assets/Images/defaultImage.png';
         let list = await AsyncStorage.getItem('album');
         let number; 
 
@@ -31,7 +34,7 @@ const AddButton = () => {
 
         const album ={
             id: 'albumID-' + number,
-            albumImage: require('../../../Assets/Images/defaultImage.png'),
+            defaultImage,
             name
         };
 
@@ -56,7 +59,7 @@ const AddButton = () => {
                 
                 <View style={styles.textInputStyle}>
                 <Text>Create Album Name!</Text>
-                <TextInput style={{ height:30, width: 150, borderColor:'gray', borderWidth:1}}
+                <TextInput style={{ height:50, width: 150, borderColor:'gray', borderWidth:1}}
                 onChangeText={text => setName(text)}
                 value={name} />
                 </View>

@@ -17,9 +17,12 @@ const AlbumTab = createStackNavigator(
                 header:null,
               }
             },
-    AlbumAllList : AlbumAllList,
-    AlbumDetail: AlbumDetail,
-
+    AlbumAllList : {
+              screen: AlbumAllList
+    } ,
+    AlbumDetail: {
+              screen: AlbumDetail
+    }, 
   }
 );
 

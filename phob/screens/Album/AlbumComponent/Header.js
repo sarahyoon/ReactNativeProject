@@ -5,7 +5,7 @@ import AddButton from './AddButton';
 const Header = () => {
     return(
         <>
-        <View style={{height:240, backgroundColor:'#4287f5'}}>
+        <View style={{height:200, backgroundColor:'#4287f5'}}>
         <AddButton/>
         </View>
         </>
