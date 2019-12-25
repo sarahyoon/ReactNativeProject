@@ -6,11 +6,9 @@ import {NavigationEvents} from 'react-navigation';
 
 let ListItem = props => (
     <TouchableOpacity onPress={props.onPress}>
-        <View>
         <View style={{paddingTop:10, paddingRight:8}}>
-            <Image source = {{uri:props.item.imageSource}} style={{width:332, height:217,borderRadius: 10}}/>
+            <Image source = {props.item.imageSource} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
-        </View>
         </View>
     </TouchableOpacity>
 )
@@ -33,12 +31,12 @@ const AlbumViewList = props => {
     }
 
     React.useEffect(() => {
-      loadData();
+      //loadData();
     }, []);
 
     return(
     <>
-        {/* <NavigationEvents onDidFocus={loadData}/> */}
+        <NavigationEvents onDidFocus={loadData}/> 
          <View style={styles.sectionContainer}>
             <View style={styles.titles}> 
                 <Text style={styles.sectionTitle}>나의 앨범</Text>
@@ -70,6 +68,7 @@ const styles=StyleSheet.create({
       color:'blue'
     },
     sectionContainer:{
+      flex:1,
       marginTop: 30,
       paddingHorizontal: 24,
     },

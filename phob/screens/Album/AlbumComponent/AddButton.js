@@ -78,7 +78,9 @@ const AddButton = () => {
 const styles = StyleSheet.create({
     addButton:{
         flex:1,
-        justifyContent:'center'
+        justifyContent:'center',
+        height:30,
+        width:30
     },
 
     modal:{
