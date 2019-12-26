@@ -3,12 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 import AddButton from './AddButton';
 import SelectGroup from '../SelectGroup/SelectGroup';
 
-const Header = () => {
+const Header = props => {
     return(
         <>
         <View style={{height:200, backgroundColor:'#4287f5'}}>
-        <AddButton/>
-        <SelectGroup/>
+        <AddButton {...props} />
+        <SelectGroup />
         </View>
         </>
     );

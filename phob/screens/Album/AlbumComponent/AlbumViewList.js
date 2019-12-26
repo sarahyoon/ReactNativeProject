@@ -5,9 +5,10 @@ import {NavigationEvents} from 'react-navigation';
 
 
 let ListItem = props => (
+  
     <TouchableOpacity onPress={props.onPress}>
         <View style={{paddingTop:10, paddingRight:8}}>
-            <Image source = {props.item.imageSource} style={{width:332, height:217,borderRadius: 10}}/>
+            <Image source = {props.item.source} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
         </View>
     </TouchableOpacity>
@@ -20,7 +21,7 @@ const AlbumViewList = props => {
         let list = await AsyncStorage.getItem('album');
         list = list ? JSON.parse(list) : [];
         setAlbumList(list);
-        console.log(list);
+        //console.log(list);
     }
 
     const deleteAll = () => {

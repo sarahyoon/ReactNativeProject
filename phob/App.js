@@ -8,7 +8,6 @@ import MyBox from './screens/Box/MyBox';
 
 import AlbumAllList from './screens/Album/AlbumAllList';
 import AlbumDetail from './screens/Album/AlbumDetail';
-import ViewImage from './screens/Album/ViewImage';
 
 const AlbumTab = createStackNavigator(
   {
@@ -29,7 +28,12 @@ const AlbumTab = createStackNavigator(
 
 const BoxTab = createStackNavigator(
   {
-    MyBox: MyBox,
+    MyBox:  {
+      screen: MyBox,
+      navigationOptions:{
+        header:null,
+      }
+    },
   }
 );
 

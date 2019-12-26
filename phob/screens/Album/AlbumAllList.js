@@ -1,32 +1,25 @@
 import React from 'react'
 import {View, Text, TouchableOpacity, FlatList, StyleSheet, Image} from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
+import {NavigationEvents} from 'react-navigation';
 
 
-    function Item({title, image}){
-        return(
+    let Item = props => (
+          <TouchableOpacity onPress={props.onPress}>
             <View style={{flexDirection:'row' ,
             alignItems:'center', justifyContent:'center'}}>
             <View style={styles.albumContainer}>
-            <Image source = {{uri:image}} style={{width:180, height:180}}></Image>
+            <Image source = {props.image} style={{width:180, height:180}}></Image>
             <Text style={{fontSize:20, color:'black', justifyContent:'center', alignItems:'center'}}>
-            {title}</Text>
+            {props.title}</Text>
             </View>
             </View>
+          </TouchableOpacity>
         );
-    }
  
     
     const AlbumAllList = props=>{
-         const {navigate} = props.navigation;
          const [albumList, setAlbumList] = React.useState([]);
-
-        // albumDetail = () =>{
-        //     return navigate('AlbumDetail');
-        // }
-        const albumDetail = Item => {
-            return navigate('AlbumDetail')
-        }
 
         const loadData = async() => {
             let list = await AsyncStorage.getItem('album');
@@ -35,21 +28,23 @@ import AsyncStorage from '@react-native-community/async-storage';
         }
 
         React.useEffect(() => {
-            loadData();
     
-        }, [albumList]);
+        }, []);
     
-        return(
+        return(   
+          <>
+          <NavigationEvents onDidFocus={loadData}/> 
             <FlatList
             numColumns={2}
             data={albumList}
             renderItem={({item}) => 
-            <TouchableOpacity onPress = {albumDetail}>
-            <Item image={item.albumImage} title={item.name}/>
-            </TouchableOpacity>
-        }
+            <Item image={item.source} title={item.name}
+            onPress = {() => props.navigation.navigate('AlbumDetail', {id: item.id, name:item.name})}
+            />}
             style={styles.list}
+            keyExtractor = {item => item.id}
         />
+        </>
         );
     };
 

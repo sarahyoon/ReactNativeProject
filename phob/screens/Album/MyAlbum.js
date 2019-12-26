@@ -5,7 +5,7 @@ import AlbumViewList from './AlbumComponent/AlbumViewList';
 const MyAlbum = props => {
     return(
         <>
-        <Header/>
+        <Header {...props}/>
         <AlbumViewList {...props}/>
         </>
     );

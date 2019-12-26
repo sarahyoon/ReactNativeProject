@@ -6,15 +6,27 @@ import ImageView from 'react-native-image-view';
 const data = [
     {
         id:'0',
-        image:'https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg',
+        source : {
+            uri:'https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg',
+        },
+        width: 806,
+        height: 720,
     },
     {
         id:'1',
-        image:'https://d17fnq9dkz9hgj.cloudfront.net/uploads/2018/01/shutterstock_587562362.jpg',
+        source : {
+            uri:'https://d17fnq9dkz9hgj.cloudfront.net/uploads/2018/01/shutterstock_587562362.jpg',
+        },
+        width: 806,
+        height: 720,
     },
     {
         id:'2',
-        image:'https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg?width=1040',
+        source : {
+            uri:'https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg?width=1040',
+        },
+        width: 806,
+        height: 720,
     },
     // {
     //     image:'https://cdn.psychologytoday.com/sites/default/files/styles/image-article_inline_full/public/field_blog_entry_teaser_image/puppy_0.jpg?itok=z4JZm548',
@@ -24,11 +36,22 @@ const data = [
     // }
 ]
 
+const images = [
+    {
+        source: {
+            uri: 'https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg',
+        },
+        title: 'Paris',
+        width: 806,
+        height: 720,
+    },
+]
+
 let Item = props => (
         <TouchableOpacity onPress={props.onPress}>
         <View style={{flexDirection:'row'}}>
         <View style={styles.albumContainer}>
-        <Image source = {{uri:props.item.image}} style={{width:180, height:180}}></Image>
+        <Image source = {props.source} style={{width:180, height:180}}></Image>
         </View>
         </View>
         </TouchableOpacity>
@@ -37,29 +60,32 @@ let Item = props => (
 
 
 const AlbumDetail = props => {
-    const [imageVisible, setImageVisible] = React.useState(false);
-    console.log(imageVisible);
-    const[index, setIndex] = React.useState(0);
+
     let headerTitle = props.navigation.state.params.name;
-    //console.log(headerTitle);
     setAlbumHeader(headerTitle);
 
-    //setAlbumHeader(headerTitle);
+    const [imageVisible, setImageVisible] = React.useState(false);
+    const[index, setIndex] = React.useState(0);
+
+
+
     return(
         
         <>
-        <View>
-        <FlatList
-        numColumns={2}
-        data={data}
-        renderItem={ itemProps =>
-        <Item {...itemProps}
-            onPress = {
-                () => {setImageVisible(!imageVisible), setIndex(itemProps.index)}
-            }
-        />}
-        keyExtractor = {(item) => item.id}
-        style={styles.list}
+        <View style={styles.container}>
+        <FlatList 
+            numColumns = {2}
+            data = {data}
+            renderItem = {
+                ({item, index}) => (
+                    <Item {...item}
+                    onPress = {
+                        () => {setImageVisible(true), setIndex(index)}
+                    }
+                    />
+                )}
+            keyExtractor = {(item) => item.id}
+            style={styles.list}
         />
         <ImageView
             images = {data}
@@ -79,13 +105,20 @@ const AlbumDetail = props => {
 };
 
 const setAlbumHeader=(headerTitle) => {
-    //console.log("set header");
+
     AlbumDetail.navigationOptions = {
         title: headerTitle
     };
 }
 
 const styles=StyleSheet.create({
+
+    container:{
+        flex:1,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent: 'center',
+    },
 
     list:{
         flexDirection:'row'

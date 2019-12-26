@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-const AddButton = () => {
+const AddButton = props => {
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [name, setName] = React.useState('');
    // const [imageSource, setImageSource] = React.useState('');
@@ -18,7 +18,7 @@ const AddButton = () => {
     const pressOk = async() => {
         
         //setImageSource('../../../Assets/Images/defaultImage.png');
-        const defaultImage = '../../../Assets/Images/defaultImage.png';
+        //const defaultImage = '../../../Assets/Images/defaultImage.png';
         let list = await AsyncStorage.getItem('album');
         let number; 
 
@@ -34,7 +34,9 @@ const AddButton = () => {
 
         const album ={
             id: 'albumID-' + number,
-            defaultImage,
+            source:{
+                uri:"https://atasouthport.com/wp-content/uploads/2017/04/default-image.jpg"
+            },
             name
         };
 
