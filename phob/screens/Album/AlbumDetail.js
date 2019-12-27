@@ -2,6 +2,7 @@ import React from 'react';
 import {View, FlatList, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import { NavigationEvents } from 'react-navigation';
 import ImageView from 'react-native-image-view';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const data = [
     {

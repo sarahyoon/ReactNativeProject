@@ -5,10 +5,9 @@ import {NavigationEvents} from 'react-navigation';
 
 
 let ListItem = props => (
-  
     <TouchableOpacity onPress={props.onPress}>
         <View style={{paddingTop:10, paddingRight:8}}>
-            <Image source = {props.item.source} style={{width:332, height:217,borderRadius: 10}}/>
+            <Image source = {props.item.images.source} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
         </View>
     </TouchableOpacity>
@@ -47,7 +46,9 @@ const AlbumViewList = props => {
                  </TouchableOpacity>
             </View>
             <FlatList data = {albumList}
-             renderItem = {itemProps => 
+             renderItem = {
+               
+             itemProps => 
             <ListItem {...itemProps}
                    onPress = {
                      () => props.navigation.navigate('AlbumDetail', {id: itemProps.item.id, name:itemProps.item.name})

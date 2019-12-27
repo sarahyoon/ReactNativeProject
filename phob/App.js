@@ -4,6 +4,7 @@ import {createAppContainer } from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import MyAlbum from './screens/Album/MyAlbum';
+import Pick from './screens/Box/Pick';
 import MyBox from './screens/Box/MyBox';
 
 import AlbumAllList from './screens/Album/AlbumAllList';
@@ -28,12 +29,19 @@ const AlbumTab = createStackNavigator(
 
 const BoxTab = createStackNavigator(
   {
-    MyBox:  {
-      screen: MyBox,
+    Pick:  {
+      screen: Pick,
       navigationOptions:{
         header:null,
       }
     },
+
+    MyBox:{
+      screen:MyBox,
+      navigationOptions:{
+        header:null,
+      }
+    }
   }
 );
 

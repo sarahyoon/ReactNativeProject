@@ -34,9 +34,16 @@ const AddButton = props => {
 
         const album ={
             id: 'albumID-' + number,
-            source:{
-                uri:"https://atasouthport.com/wp-content/uploads/2017/04/default-image.jpg"
-            },
+            images:[
+                {   
+                    imageId:'0',
+                    source:{
+                        uri:"https://atasouthport.com/wp-content/uploads/2017/04/default-image.jpg"
+                    },
+                    width:806,
+                    height:720,
+                },
+            ],
             name
         };
 
