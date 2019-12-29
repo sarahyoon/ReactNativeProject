@@ -2,6 +2,59 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image, Button, TextInput, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-community/async-storage';
+import Styled from 'styled-components';
+
+
+const PlusButton = Styled.TouchableOpacity`
+    justify-content:center;
+    marginTop: 58;
+    marginLeft: 20;
+    height:50;
+    width:50;
+
+`;
+
+const ModalView = Styled.TouchableOpacity`
+    height: 160;
+    backgroundColor: white;
+    justifyContent: center;
+    alignItems: center;
+    borderRadius: 7;
+    borderColor: rgba(0, 0, 0, 0.1);
+
+`;
+
+const AlbumText = Styled.Text`
+    fontSize:15;
+    fontWeight: bold;
+`;
+
+const AlbumNameInput = Styled.TextInput`
+    
+    margin-top: 15;
+    margin-bottom:10;
+    width: 200;
+    height: 40;
+    borderColor:#A9A9A9;
+    borderWidth:1;
+`;
+
+const CreateButton = Styled.TouchableOpacity`
+
+    width:60;
+    height:35;
+    border: 2px solid royalblue;
+    border-radius: 3px;
+    fontSize:10px;
+    backgroundColor:royalblue;
+`;
+
+const ButtonText = Styled.Text`
+    marginTop:5
+    fontSize:18;
+    color:white;
+    text-align:center;
+`;
 
 
 const AddButton = props => {
@@ -17,8 +70,10 @@ const AddButton = props => {
     //save
     const pressOk = async() => {
         
-        //setImageSource('../../../Assets/Images/defaultImage.png');
-        //const defaultImage = '../../../Assets/Images/defaultImage.png';
+        if(name === ''){
+            alert('앨범이름을 입력하세요!');
+            return;
+        }
         let list = await AsyncStorage.getItem('album');
         let number; 
 
@@ -55,73 +110,36 @@ const AddButton = props => {
 
     return(
         <View style={{flex:1}}>
-            <TouchableOpacity onPress = {toggleModal} style={styles.addButton}>
+            <PlusButton onPress = {toggleModal}>
                 <Image 
                 source = {
                     require('../../../Assets/Icons/add.png')
                 }
                 style={{width:30, height:30}}
                 />
-            </TouchableOpacity>
-            <Modal isVisible={isModalVisible}>
-                <View style={styles.modal}>
-                
-                <View style={styles.textInputStyle}>
-                <Text>Create Album Name!</Text>
-                <TextInput style={{ height:50, width: 150, borderColor:'gray', borderWidth:1}}
-                onChangeText={text => setName(text)}
-                value={name} />
-                </View>
-
-                <View style = {styles.buttonStyle}>
-                <Button style={styles.cancel} title="cancel" onPress={toggleModal} />
-                <Button style={styles.ok} title="ok" onPress={pressOk} />
-                </View>
-
-                </View>
+            </PlusButton>
+            <Modal isVisible={isModalVisible}
+                    animationIn="zoomInDown"
+                    animationOut="zoomOutUp"
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    onBackdropPress={() => setModalVisible(!isModalVisible)}        
+            >
+                <ModalView>
+                    <AlbumText>앨범 이름을 입력하세요.</AlbumText>
+                    <AlbumNameInput
+                    onChangeText={text => setName(text)}
+                    value={name} />
+                    {/* <Button style={styles.cancel} title="cancel" onPress={toggleModal} /> */}
+                    <CreateButton onPress={pressOk}>
+                        <ButtonText>확인</ButtonText>
+                    </CreateButton>
+                </ModalView>
             </Modal>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    addButton:{
-        flex:1,
-        justifyContent:'center',
-        height:30,
-        width:30
-    },
 
-    modal:{
-        backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-
-    textInputStyle:{
-        alignItems:'center'
-    },
-    buttonStyle:{
-        justifyContent:'center',
-        flexDirection: 'row',
-    },
-    cancel: {
-
-        paddingHorizontal:20,
-        paddingVertical:15,
-        marginRight:20,
-        borderRadius:8,
-
-    },
-    ok: {
-        paddingHorizontal:20,
-        paddingVertical:15,
-        borderRadius:8,
-
-    }
-})
 
 export default AddButton;

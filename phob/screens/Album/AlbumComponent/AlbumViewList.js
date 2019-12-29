@@ -7,7 +7,7 @@ import {NavigationEvents} from 'react-navigation';
 let ListItem = props => (
     <TouchableOpacity onPress={props.onPress}>
         <View style={{paddingTop:10, paddingRight:8}}>
-            <Image source = {props.item.images.source} style={{width:332, height:217,borderRadius: 10}}/>
+            <Image source = {props.item.images[0].source} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
         </View>
     </TouchableOpacity>

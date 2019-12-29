@@ -6,14 +6,21 @@ import SelectGroup from '../SelectGroup/SelectGroup';
 const Header = props => {
     return(
         <>
-        <View style={{height:200, backgroundColor:'#4287f5'}}>
-        <AddButton {...props} />
-        <SelectGroup />
+        <View style={styles.container}>
+            <AddButton {...props} />
+            <SelectGroup />
         </View>
         </>
     );
 }
-//1. select singer modal
 
+const styles = StyleSheet.create({
+
+    container:{
+        height:170,
+        backgroundColor:'royalblue'
+    }
+
+});
 
 export default Header;

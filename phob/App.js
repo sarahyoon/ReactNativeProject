@@ -38,9 +38,7 @@ const BoxTab = createStackNavigator(
 
     MyBox:{
       screen:MyBox,
-      navigationOptions:{
-        header:null,
-      }
+
     }
   }
 );

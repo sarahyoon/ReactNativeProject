@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Text, Button, StyleSheet, Image, Dimensions, TouchableOpacity,Platform} from 'react-native';
 import CameraRoll from "@react-native-community/cameraroll";
 import {NavigationEvents} from 'react-navigation';
 import { PermissionsAndroid } from 'react-native'
@@ -30,18 +30,34 @@ const ImageView = props => {
     };
 }
    const loadImages = async() => {
-        if (await requestExternalStoreageRead()) {
-            CameraRoll.getPhotos({
-            first:20,
-            assetType:'All',
-        }).then(r=>{
-            setPhotos(r.edges);
-            console.log(photos)
-        }).catch((err) => {
-            alert(err);
-            
-        });
+        
+        if(Platform.os === 'android'){
+            if (await requestExternalStoreageRead()) {
+                CameraRoll.getPhotos({
+                first:20,
+                assetType:'All',
+            }).then(r=>{
+                setPhotos(r.edges);
+                console.log(photos)
+            }).catch((err) => {
+                alert(err);
+                
+            });
+            }
         }
+        else{
+            CameraRoll.getPhotos({
+                first:20,
+                assetType:'All',
+            }).then(r=>{
+                setPhotos(r.edges);
+                console.log(photos)
+            }).catch((err) => {
+                alert(err);
+                
+            });
+        }
+
     };
 
 
@@ -73,7 +89,6 @@ const ImageView = props => {
         <>
         <NavigationEvents onDidFocus={loadImages} />
         <View style={{flex:1}}>
-            <Text style={{fontSize: 30}}> My Box!!!</Text>
 
             <View style={styles.container}>
                 <TouchableOpacity onPress={goForward}>
@@ -98,6 +113,9 @@ const ImageView = props => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'black'
     },
     item: {
       width: screenWidth - 60,
