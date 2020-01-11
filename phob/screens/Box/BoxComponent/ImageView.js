@@ -4,6 +4,7 @@ import CameraRoll from "@react-native-community/cameraroll";
 import {NavigationEvents} from 'react-navigation';
 import { PermissionsAndroid } from 'react-native'
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import MyAlbumList from './MyAlbumList';
 
 const { width: screenWidth } = Dimensions.get('window')
 
@@ -11,7 +12,7 @@ const { width: screenWidth } = Dimensions.get('window')
 
 const ImageView = props => {
     const [photos, setPhotos] = React.useState([]);
-
+    console.log("ImageView");
     async function requestExternalStoreageRead() {
         try {
             const granted = await PermissionsAndroid.request(
@@ -38,7 +39,6 @@ const ImageView = props => {
                 assetType:'All',
             }).then(r=>{
                 setPhotos(r.edges);
-                console.log(photos)
             }).catch((err) => {
                 alert(err);
                 
@@ -51,7 +51,6 @@ const ImageView = props => {
                 assetType:'All',
             }).then(r=>{
                 setPhotos(r.edges);
-                console.log(photos)
             }).catch((err) => {
                 alert(err);
                 
@@ -62,13 +61,15 @@ const ImageView = props => {
 
 
     const carouselRef = React.useRef(null)
-
     const goForward = () => {
         carouselRef.current.snapToNext()
     }
 
+    /**
+     * Todo:
+     * 사진이미지 크기 조절
+     */
     const _renderItem = ({item, index}, parallaxProps) => {
-        console.log(photos);
         return (
             <View style={styles.item}>
                 <ParallaxImage
@@ -84,12 +85,29 @@ const ImageView = props => {
             </View>
         );
     }
-    
+
+    const[imageUri, setImageUri] = React.useState('');
+
+    const setActivePage = () => {
+        let imageIndex = carouselRef.current.currentIndex;
+        if(imageIndex == 0){
+            /**
+             * Todo:
+             * 화면 진입후, 첫번째 사진정보 myAlbumList로 넘기기
+             */
+            console.log(carouselRef.current.props.data[imageIndex].node.image.uri);
+            setImageUri(carouselRef.current.props.data[imageIndex].node.image.uri);
+            }
+        setImageUri(carouselRef.current.props.data[imageIndex].node.image.uri);
+        console.log(carouselRef.current.props.data[imageIndex].node.image.uri);
+
+    }
+
     return(
         <>
-        <NavigationEvents onDidFocus={loadImages} />
-        <View style={{flex:1}}>
+        
 
+        <NavigationEvents onDidFocus={loadImages} />
             <View style={styles.container}>
                 <TouchableOpacity onPress={goForward}>
                     <Text>go to next slide</Text>
@@ -102,9 +120,10 @@ const ImageView = props => {
                     data={photos}
                     renderItem={_renderItem}
                     hasParallaxImages={true}
+                    onSnapToItem = {setActivePage}
                 />
             </View>
-        </View>
+        <MyAlbumList imageUri={imageUri}/>
         </>
     );
 }

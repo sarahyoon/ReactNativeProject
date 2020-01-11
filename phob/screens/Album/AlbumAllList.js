@@ -6,8 +6,7 @@ import {NavigationEvents} from 'react-navigation';
 
     let Item = props => (
           <TouchableOpacity onPress={props.onPress}>
-            <View style={{flexDirection:'row' ,
-            alignItems:'center', justifyContent:'center'}}>
+            <View >
             <View style={styles.albumContainer}>
             <Image source = {props.image} style={{width:180, height:180}}></Image>
             <Text style={{fontSize:20, color:'black', justifyContent:'center', alignItems:'center'}}>
@@ -38,7 +37,7 @@ import {NavigationEvents} from 'react-navigation';
             numColumns={2}
             data={albumList}
             renderItem={({item}) => 
-            <Item image={item.source} title={item.name}
+            <Item image={item.images[0].source} title={item.name}
             onPress = {() => props.navigation.navigate('AlbumDetail', {id: item.id, name:item.name})}
             />}
             style={styles.list}
@@ -54,32 +53,12 @@ import {NavigationEvents} from 'react-navigation';
     };
     
     const styles=StyleSheet.create({
-        all:{
-          flexDirection:'row',
-          alignItems:'flex-end',
-          color:'blue'
-        },
-        sectionContainer:{
-          marginTop: 30,
-          paddingHorizontal: 24,
-        },
-        titles:{
-          justifyContent:'space-between',
-          flexDirection:'row'
-        },
-        sectionTitle: {
-          fontSize: 24,
-          fontWeight: '600',
-          color: 'black',
-        },
-        highlight: {
-          fontWeight: '700',
-        },
+
         albumContainer:{
-            paddingTop:10,
-            paddingRight:8,
             justifyContent:'center',
-            alignItems:'center'
+            alignItems:'center',
+            marginLeft:18,
+            marginTop:10,
             
         },
         list:{

@@ -6,7 +6,7 @@ import {NavigationEvents} from 'react-navigation';
 
 let ListItem = props => (
     <TouchableOpacity onPress={props.onPress}>
-        <View style={{paddingTop:10, paddingRight:8}}>
+        <View style={{paddingTop:10, paddingRight:8, justifyContent:'center', alignItems:'center'}}>
             <Image source = {props.item.images[0].source} style={{width:332, height:217,borderRadius: 10}}/>
             <Text style={{fontSize:20}}>{props.item.name}</Text>
         </View>
@@ -20,6 +20,11 @@ const AlbumViewList = props => {
         let list = await AsyncStorage.getItem('album');
         list = list ? JSON.parse(list) : [];
         setAlbumList(list);
+        /**
+         * Todo: 
+         * 앨범에 사진 없는 경우: default 사진
+         * 앨범에 사진 존재하는 경우: 저장된 첫번째 사진 불러오기
+         */
         //console.log(list);
     }
 
@@ -30,13 +35,20 @@ const AlbumViewList = props => {
         AsyncStorage.setItem('album', JSON.stringify(list));
     }
 
+    /**
+     * Todo:
+     * AddButton 컴포넌트에서 modal close하면 
+     * 추가된 앨범 바로 albumview에 랜더링 
+     */
+    //console.log("props" + props);
     React.useEffect(() => {
-      //loadData();
+     loadData();
+     //console.log("load");
     }, []);
 
     return(
     <>
-        <NavigationEvents onDidFocus={loadData}/> 
+       <NavigationEvents onDidFocus={loadData}/> 
          <View style={styles.sectionContainer}>
             <View style={styles.titles}> 
                 <Text style={styles.sectionTitle}>나의 앨범</Text>
@@ -47,7 +59,6 @@ const AlbumViewList = props => {
             </View>
             <FlatList data = {albumList}
              renderItem = {
-               
              itemProps => 
             <ListItem {...itemProps}
                    onPress = {

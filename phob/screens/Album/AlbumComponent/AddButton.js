@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, Button, TextInput, StyleSheet} from
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-community/async-storage';
 import Styled from 'styled-components';
-
+import AlbumViewList from './AlbumViewList';
 
 const PlusButton = Styled.TouchableOpacity`
     justify-content:center;
@@ -105,11 +105,12 @@ const AddButton = props => {
         list.push(album);
         await AsyncStorage.setItem('album', JSON.stringify(list));
         setModalVisible(false);
+        <AlbumViewList modalView={"close"}/>
         setName('');
     }
 
     return(
-        <View style={{flex:1}}>
+        <View>
             <PlusButton onPress = {toggleModal}>
                 <Image 
                 source = {
